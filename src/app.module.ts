@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { RoomModule } from './room/room.module';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    RedisModule.forRoot({
+      readyLog: true,
+      config : {
+        host: 'localhost',
+        port: 6379
+      }
+      // config : {
+      //   url: process.env.REDIS_URL,
+      // }
+    }),
+    RoomModule,
+  ],
 })
 export class AppModule {}
